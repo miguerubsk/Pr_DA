@@ -16,12 +16,15 @@
 #include "ivector.h"
 
 #define UMBRAL 2
-#define TAM 10
+#define TAM 100
 
-/*
- *
+
+/**
+ * 
+ * @param T
+ * @param ini
+ * @param fin
  */
-
 void burbujaMejorado(ivector T, int ini, int fin) {
     int i, j;
     int aux;
@@ -38,6 +41,12 @@ void burbujaMejorado(ivector T, int ini, int fin) {
     }
 }
 
+/**
+ * 
+ * @param v
+ * @param ini
+ * @param fin
+ */
 void insercion2(ivector v, int ini, int fin) {
     int j, aux;
     for (int i = ini + 1; i < fin; i++) {
@@ -51,6 +60,12 @@ void insercion2(ivector v, int ini, int fin) {
     };
 }
 
+/**
+ * 
+ * @param v
+ * @param ini
+ * @param fin
+ */
 void insercion(ivector v, int ini, int fin) {
     int j, aux;
     for (int i = ini; i < fin; ++i) {
@@ -64,6 +79,12 @@ void insercion(ivector v, int ini, int fin) {
     }
 }
 
+/**
+ * 
+ * @param v
+ * @param ini
+ * @param fin
+ */
 void burbuja(ivector v, int ini, int fin) {
     int i, j, aux;
     for (i = ini; i < fin; ++i) {
@@ -77,14 +98,21 @@ void burbuja(ivector v, int ini, int fin) {
     }
 }
 
+/**
+ * 
+ * @param v
+ * @param ini
+ * @param fin
+ * @param centro
+ */
 void merge(ivector v, int ini, int fin, int centro) {
     int x, y, z;
     ivector aux;
     x = ini;
     y = centro + 1;
     z = 0;
-    //aux = (int *) malloc (((ultimo+1)*8) * sizeof( int ));
     aux = icreavector(fin - ini + 1);
+    
     while ((x <= centro) && (y <= fin)) {
 
         if (v[x] <= v[y]) {
@@ -95,8 +123,8 @@ void merge(ivector v, int ini, int fin, int centro) {
             y++;
         }
         z++;
-
     }
+    
     while (x <= centro) {
         aux[z] = v[x];
         x++;
@@ -108,6 +136,7 @@ void merge(ivector v, int ini, int fin, int centro) {
         y++;
         z++;
     }
+    
     z = 0;
     for (x = ini; x <= fin; x++) {
         v[x] = aux[z];
@@ -118,16 +147,22 @@ void merge(ivector v, int ini, int fin, int centro) {
 
 }
 
+/**
+ * 
+ * @param v
+ * @param ini
+ * @param fin
+ */
 void mergesort(ivector v, int ini, int fin) {
     int tam = fin - ini;
     if (tam + 1 <= UMBRAL) {
         burbujaMejorado(v, ini, fin);
     } else {
-        int centro = (ini + fin) / 2;
+        int centro = ini + ((fin - ini) / 2);
         mergesort(v, ini, centro);
         mergesort(v, centro + 1, fin);
 
-        merge(v, ini, fin, tam);
+        merge(v, ini, fin, centro);
     }
 }
 
@@ -139,7 +174,7 @@ int main(int argc, char** argv) {
     ivector v;
     v = icreavector(TAM);
     for (int i = 0; i < TAM; ++i) {
-        v[i] = rand() % 100;
+        v[i] = TAM - i;
         printf("%*d - ", 4, v[i]);
     }
     printf("\n");
