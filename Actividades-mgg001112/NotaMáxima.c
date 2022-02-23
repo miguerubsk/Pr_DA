@@ -97,7 +97,7 @@ int SumaMax(ivector v, int ini, int fin, int *dini, int *dfin) {
         if (max_der + max_izq > max_aux) {
             *dini = e;
             *dfin = f;
-            max_aux = max_der + max_izq;
+            return max_der + max_izq;
         }
         return max_aux;
     }
