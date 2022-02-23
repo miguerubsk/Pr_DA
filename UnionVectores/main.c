@@ -1,7 +1,18 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright (C) 2021 Miguel González García
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 /* 
@@ -26,7 +37,7 @@
  * @param finX
  * @param Y
  * @param iniY
- * @param iniX
+ * @param finY
  * @return 
  */
 int base(ivector X, int iniX, int finX, ivector Y, int iniY, int finY) {
@@ -34,9 +45,14 @@ int base(ivector X, int iniX, int finX, ivector Y, int iniY, int finY) {
         return X[finX];
     if (Y[finY] < X[iniX])
         return Y[finY];
-    if (X[iniX] < Y[iniY])
-        return Y[iniY];
-    return X[iniX];
+
+    int x;
+    if (X[iniX] < Y[iniY]) {
+        x = Y[iniY];
+    } else {
+        x = X[iniX];
+    }
+    return x;
 }
 
 /**
