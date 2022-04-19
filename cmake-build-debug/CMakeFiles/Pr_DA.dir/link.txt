@@ -1,0 +1,1 @@
+/usr/bin/cc -g  -Wl,--enable-auto-import CMakeFiles/Pr_DA.dir/main.c.o  -o Pr_DA.exe -Wl,--out-implib,libPr_DA.dll.a -Wl,--major-image-version,0,--minor-image-version,0 
