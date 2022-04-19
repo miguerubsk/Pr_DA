@@ -27,76 +27,63 @@
 #include <stdlib.h>
 #include "ivector.h"
 
-int factible(int n_cifras, ivector digito) {
+/**
+ * 
+ * @param n_cifras
+ * @param numero
+ * @return 
+ */
+int factible(int n_cifras, ivector numero) {
     int sumapar = 0;
     int sumaimpar = 0;
     for (int i = 0; i < n_cifras; i++) {
         if (i % 2 == 0) {
-            sumapar = sumapar + digito[i];
+            sumapar = sumapar + numero[i];
         } else {
-            sumaimpar = sumaimpar + digito[i];
+            sumaimpar = sumaimpar + numero[i];
         }
     }
     return (sumaimpar == sumapar);
-/*
-    if (sumapar == sumaimpar)
-        return 1;
-    return 0;
-*/
-
 }
 
-void sumadedigitos(int cifras, int paso, ivector solActual) {
-    /*
-        if((*num_)==4){
-            int k=0;
-        }
-     */
-    if (paso == cifras) {
-        if (factible(cifras, solActual)) {
+/**
+ * 
+ * @param nCifras
+ * @param paso
+ * @param numero
+ */
+void sumadedigitos(int nCifras, int paso, ivector numero) {
+    if (paso == nCifras) {
+        if (factible(nCifras, numero)) {
             int num = 0;
-            for (int i = 0; i < cifras; i++) {
-                num += (int) solActual[i] * powf(10, i);
+            for (int i = 0; i < nCifras; i++) {
+                num += (int) numero[i] * powf(10, i);
 
             }
-            /*
-                        salida[(*num_)] = aux;
-             */
-
             printf("%d  ", num);
         }
-
     } else {
         for (int i = 1; i <= 5; i++) {
-            //for (int j = 1; j <= 5; j++) {
-            solActual[paso] = i;
-            sumadedigitos(cifras, paso + 1, solActual);
-            //}
+            numero[paso] = i;
+            sumadedigitos(nCifras, paso + 1, numero);
         }
     }
-
-
 }
 
 int main() {
-    ivector vector_salida;
-    ivector aux;
-    int TAM = 99;
-    vector_salida = icreavector(TAM);
+    ivector numero;
     int valor = 2;
-        printf("Introduce el valor n cifras: ");
-        fflush(stdin);
-        scanf("%d", &valor);
-    aux = icreavector(valor);
-    int n_sol = 0;
-    for (int i = 0; i < TAM; ++i) {
-        vector_salida[i] = 0;
-    }
+    
+    printf("Introduce el valor n cifras: ");
+    fflush(stdin);
+    scanf("%d", &valor);
+    
+    numero = icreavector(valor);
 
     printf("Los numeros cuyas cifras pares suman lo mismo que las impares son:\n");
-    sumadedigitos(valor, 0, aux);
+    sumadedigitos(valor, 0, numero);
 
-    ifreevector(&vector_salida);
+    ifreevector(&numero);
     return EXIT_SUCCESS;
 }
 
