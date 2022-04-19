@@ -1,3 +1,0 @@
-/cygdrive/e/Users/Miguerubsk/Documents/GitHub/Pr_DA/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/cygdrive/e/Users/Miguerubsk/Documents/GitHub/Pr_DA/cmake-build-debug/CMakeFiles/edit_cache.dir
-/cygdrive/e/Users/Miguerubsk/Documents/GitHub/Pr_DA/cmake-build-debug/CMakeFiles/Pr_DA.dir
