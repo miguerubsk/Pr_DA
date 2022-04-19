@@ -156,7 +156,7 @@ int main(int argc, char** argv) {
     for (int i = 0; i < TAM; i++) {
         printf("%*d", 5, mejor[i]);
     }
-    printf(" -> %dL", coste);
+    printf(" -> %d litros gastados", coste);
 
     ifreematriz2d(&tabla);
     ifreevector(&v);
