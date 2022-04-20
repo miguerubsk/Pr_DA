@@ -28,7 +28,7 @@
 #include "ivector.h"
 
 /**
- * 
+ * Comprueba si la solución es factible
  * @param n_cifras
  * @param numero
  * @return 
@@ -47,7 +47,7 @@ int factible(int n_cifras, ivector numero) {
 }
 
 /**
- * 
+ * Calcula todos los números de nCifras cuyas cifras pares suman lo mismo que las impares
  * @param nCifras
  * @param paso
  * @param numero
@@ -57,7 +57,7 @@ void sumadedigitos(int nCifras, int paso, ivector numero) {
         if (factible(nCifras, numero)) {
             int num = 0;
             for (int i = 0; i < nCifras; i++) {
-                num += (int) numero[i] * powf(10, i);
+                num += (int) numero[i] * powf(10, nCifras - i - 1);
 
             }
             printf("%d  ", num);
@@ -73,11 +73,11 @@ void sumadedigitos(int nCifras, int paso, ivector numero) {
 int main() {
     ivector numero;
     int valor = 2;
-    
+
     printf("Introduce el valor n cifras: ");
     fflush(stdin);
     scanf("%d", &valor);
-    
+
     numero = icreavector(valor);
 
     printf("Los numeros cuyas cifras pares suman lo mismo que las impares son:\n");
