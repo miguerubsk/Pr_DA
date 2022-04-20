@@ -14,10 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 /* 
  * File:   main.c
- * Author: Miguerubsk
+ * Author: Miguel González García
  *
  * Created on 12 de abril de 2022, 13:06
  */
@@ -29,56 +28,35 @@
 #define TAM 7
 
 /**
- * 
- * @param m
- * @param v
- * @param paso
- * @param max
- * @return 
+ * Calcula la asignación de destinos a los transportistas gastando el menor combustible posible
+ * @param m tabla que contiene para cada transportista y destino el gasto de combustible asociado
+ * @param solActual vector donde se almacena la solución que está construyendo el algoritmo
+ * @param marcado vector donde se marca un destino ya asignado para no asignarlo a otro transportista, inicializado a 0
+ * @param mejorSol mejor asignación de destinos encontrada hasta el momento
+ * @param n número de transportistas y destinos
+ * @param paso transportista al que se está intentado asignar un destino, inicialmente vale 0
+ * @param costeActual combustible gastado de la solución que se está construyendo, inicialmente vale 0
+ * @param mejorCoste combustible gastado de la mejor solución encontrada hasta el momento, inicialmente vale infinito
  */
-int Coste(imatriz2d m, ivector v, int paso, int max/*, int coste*/) {
-    int aux = 0;
-    int rep[max];
-    for (int i = 0; i < max; ++i)
-        rep[i] = 0;
-
-    for (int i = 0; i <= paso; ++i) {
-        aux += m[i][v[i]];
-        rep[v[i]]++;
-    }
-
-    for (int i = 0; i < max; ++i)
-        if (rep[i] > 1)
-            aux = RAND_MAX;
-
-    return aux;
-}
-
-/**
- * 
- * @param m
- * @param v
- * @param mejor
- * @param n
- * @param paso
- * @param mejorCoste
- */
-void MinCombustible(imatriz2d m, ivector v, ivector mejor, int n, int paso, int *mejorCoste) {
-    int costeActual;
+void MinCombustible(imatriz2d m, ivector solActual, ivector marcado, ivector mejorSol, int n, int paso, int costeActual, int *mejorCoste) {
     if (paso == n) {
-        costeActual = Coste(m, v, paso - 1, n);
         if (costeActual < *mejorCoste) {
             *mejorCoste = costeActual;
             for (int i = 0; i < n; ++i) {
-                mejor[i] = v[i];
+                mejorSol[i] = solActual[i];
             }
         }
     } else {
         for (int i = 0; i < n; ++i) {
-            v[paso] = i;
-            costeActual = Coste(m, v, paso, n);
-            if (costeActual < RAND_MAX && costeActual < *mejorCoste) { //poda
-                MinCombustible(m, v, mejor, n, paso + 1, mejorCoste);
+            if (!marcado[i]) {
+                solActual[paso] = i;
+                marcado[i] = 1;
+                costeActual += m[paso][i];
+                if (costeActual < *mejorCoste) { //poda
+                    MinCombustible(m, solActual, marcado, mejorSol, n, paso + 1, costeActual, mejorCoste);
+                }
+                marcado[i] = 0;
+                costeActual -= m[paso][i];
             }
         }
     }
@@ -89,6 +67,7 @@ void MinCombustible(imatriz2d m, ivector v, ivector mejor, int n, int paso, int 
  */
 int main(int argc, char** argv) {
     imatriz2d tabla = icreamatriz2d(TAM, TAM);
+    ivector marcado = icreavector(TAM);
 
     if (1) {
         tabla[0][0] = 17;
@@ -149,6 +128,7 @@ int main(int argc, char** argv) {
     }
 
     for (int i = 0; i < TAM; i++) {
+        marcado[i] = 0;
         for (int j = 0; j < TAM; j++) {
             printf("%*d", 5, tabla[i][j]);
         }
@@ -158,7 +138,7 @@ int main(int argc, char** argv) {
     int coste = RAND_MAX;
     ivector v = icreavector(TAM);
     ivector mejor = icreavector(TAM);
-    MinCombustible(tabla, v, mejor, TAM, 0, &coste);
+    MinCombustible(tabla, v, marcado, mejor, TAM, 0, 0, &coste);
 
     printf("\n");
     for (int i = 0; i < TAM; i++) {
@@ -172,4 +152,3 @@ int main(int argc, char** argv) {
 
     return (EXIT_SUCCESS);
 }
-
