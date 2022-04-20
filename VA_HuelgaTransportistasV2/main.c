@@ -28,37 +28,18 @@
 #define TAM 7
 
 /**
- * 
- * @param m
- * @param v
- * @param paso
- * @param max
- * @return 
- */
-int Coste(imatriz2d m, ivector v, int paso, int max, int coste) {
-    int aux = 0;
-    for (int i = 0; i < paso; ++i) {
-        if (v[i] == v[paso])
-            return RAND_MAX;
-    }
-
-    return coste + m[paso][v[paso]];
-}
-
-/**
- * 
- * @param m
- * @param v
- * @param mejor
- * @param n
- * @param paso
- * @param mejorCoste
+ * Calcula la asignación de destinos a los transportistas gastando el menor combustible posible
+ * @param m tabla que contiene para cada transportista y destino el gasto de combustible asociado
+ * @param solActual vector donde se almacena la solución que está construyendo el algoritmo
+ * @param marcado vector donde se marca un destino ya asignado para no asignarlo a otro transportista, inicializado a 0
+ * @param mejorSol mejor asignación de destinos encontrada hasta el momento
+ * @param n número de transportistas y destinos
+ * @param paso transportista al que se está intentado asignar un destino, inicialmente vale 0
+ * @param costeActual combustible gastado de la solución que se está construyendo, inicialmente vale 0
+ * @param mejorCoste combustible gastado de la mejor solución encontrada hasta el momento, inicialmente vale infinito
  */
 void MinCombustible(imatriz2d m, ivector solActual, ivector marcado, ivector mejorSol, int n, int paso, int costeActual, int *mejorCoste) {
     if (paso == n) {
-        /*
-                costeActual = Coste(m, v, paso-1, n, costeActual);
-         */
         if (costeActual < *mejorCoste) {
             *mejorCoste = costeActual;
             for (int i = 0; i < n; ++i) {
@@ -75,6 +56,7 @@ void MinCombustible(imatriz2d m, ivector solActual, ivector marcado, ivector mej
                     MinCombustible(m, solActual, marcado, mejorSol, n, paso + 1, costeActual, mejorCoste);
                 }
                 marcado[i] = 0;
+                costeActual -= m[paso][i];
             }
         }
     }
@@ -170,4 +152,3 @@ int main(int argc, char** argv) {
 
     return (EXIT_SUCCESS);
 }
-
