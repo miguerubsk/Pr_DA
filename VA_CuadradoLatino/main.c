@@ -66,13 +66,31 @@ void CuadradoLatino(imatriz2d C, int n, int x, int y) {
     }
 }
 
+void CuadradoLatino2(imatriz2d C, int n, int x, int y) {
+    printf("X: %d  Y: %d\n", x, y);
+    if (y == n && x == n) {
+        MostrarSolución(C, n);
+    } else {
+        for (int i = 1; i <= n; ++i) {
+            C[x][y] = i;
+            if (Factible(C, x, y)) {
+                if(y+1 == n){
+                    CuadradoLatino2(C, n, x+1, 0);
+                }else{
+                    CuadradoLatino2(C, n, x, y + 1);
+                }
+            }
+        }
+    }
+}
+
 /*
  * 
  */
 int main(int argc, char** argv) {
 
     imatriz2d cuadradoL = icreamatriz2d(N, N);
-    CuadradoLatino(cuadradoL, N, 0, 0);
+    CuadradoLatino2(cuadradoL, N, 0, 0);
     
     return (EXIT_SUCCESS);
 }
