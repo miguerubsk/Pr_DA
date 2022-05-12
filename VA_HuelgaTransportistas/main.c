@@ -48,6 +48,7 @@ void MinCombustible(imatriz2d m, ivector solActual, ivector marcado, ivector mej
             }
         }
     } else {
+        
         for (int i = 0; i < n; ++i) {
             if (!marcado[i]) {
                 solActual[paso] = i;
