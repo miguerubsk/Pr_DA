@@ -29,8 +29,8 @@
 #define N 3
 
 void MostrarSolución(imatriz2d M, int n) {
-    for(int i = 0; i < n; ++i){
-        for (int j = 0; j < n; ++j){
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < n; ++j) {
             printf("%*d", 5, M[i][j]);
         }
         printf("\n");
@@ -38,11 +38,11 @@ void MostrarSolución(imatriz2d M, int n) {
 }
 
 int Factible(imatriz2d M, int posX, int posY) {
-    for(int i = 0; i < posY; ++i)
-        if(M[posX][i] == M[posX][posY])
+    for (int i = 0; i < posY; ++i)
+        if (M[posX][i] == M[posX][posY])
             return 0;
-    for(int j = 0; j < posX; ++j)
-        if(M[j][posX] == M[posY][posX])
+    for (int j = 0; j < posX; ++j)
+        if (M[j][posX] == M[posY][posX])
             return 0;
     return 1;
 }
@@ -53,9 +53,9 @@ void CuadradoLatino(imatriz2d C, int n, int x, int y) {
         MostrarSolución(C, n);
     } else {
         if (y == n) {
-            
+
             y = 0;
-            x+=1;
+            x = x + 1;
         }
         for (int i = 1; i <= n; ++i) {
             C[x][y] = i;
@@ -74,9 +74,9 @@ void CuadradoLatino2(imatriz2d C, int n, int x, int y) {
         for (int i = 1; i <= n; ++i) {
             C[x][y] = i;
             if (Factible(C, x, y)) {
-                if(y+1 == n){
-                    CuadradoLatino2(C, n, x+1, 0);
-                }else{
+                if (y + 1 == n) {
+                    CuadradoLatino2(C, n, x + 1, 0);
+                } else {
                     CuadradoLatino2(C, n, x, y + 1);
                 }
             }
@@ -91,7 +91,7 @@ int main(int argc, char** argv) {
 
     imatriz2d cuadradoL = icreamatriz2d(N, N);
     CuadradoLatino2(cuadradoL, N, 0, 0);
-    
+
     return (EXIT_SUCCESS);
 }
 
