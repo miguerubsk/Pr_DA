@@ -63,6 +63,11 @@ void CuadradoLatino(imatriz2d C, int n, int x, int y) {
                 CuadradoLatino(C, n, x, y + 1);
             }
         }
+        if (y == n) {
+
+            y = n-1;
+            x = x - 1;
+        }
     }
 }
 
