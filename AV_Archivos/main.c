@@ -63,8 +63,8 @@ int maxFiles(File files[], int nFiles, int sDisc, File saved[]) {
     int nSaved = 0;
     while (used + files[i].size <= sDisc && i < nFiles) {
         used += files[i].size;
-        saved[nSaved] = files[i];
-        nSaved++;
+        saved[nSaved++] = files[i];
+        //nSaved++;
         i++;
     }
     return nSaved;
